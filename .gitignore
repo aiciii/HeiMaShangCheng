@@ -1,0 +1,24 @@
+# IDEA的项目配置文件，绝对不上传
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Tomcat/Web项目 编译后的字节码文件、打包文件、缓存
+target/
+build/
+classes/
+lib/WEB-INF/classes/
+*.war
+*.bak
+
+# 本地日志、临时文件
+logs/
+temp/
+*.log
+*.tmp
+
+# Windows系统的隐藏文件
+.DS_Store
+Thumbs.db
