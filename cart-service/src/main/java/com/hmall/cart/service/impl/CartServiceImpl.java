@@ -111,7 +111,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements IC
 //        }
 //        List<ItemDTO> items = response.getBody();
 
-        List<ItemDTO> items = itemClient.queryItemById(itemIds);
+        List<ItemDTO> items = itemClient.queryItemByIds(itemIds);
         // 2.查询商品
         if (CollUtils.isEmpty(items)) {
             return;
