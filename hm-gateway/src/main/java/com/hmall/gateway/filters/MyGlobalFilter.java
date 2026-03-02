@@ -18,7 +18,8 @@ public class MyGlobalFilter implements GlobalFilter, Ordered {
         //todo 模拟登录校验逻辑
         ServerHttpRequest request = exchange.getRequest();
         HttpHeaders headers = request.getHeaders();
-        return null;
+        System.out.println("headers"+headers);
+        return chain.filter(exchange);
     }
 
     @Override
