@@ -16,17 +16,18 @@ import java.util.List;
 public class PrintAnyGatewayFilterFactory extends AbstractGatewayFilterFactory<PrintAnyGatewayFilterFactory.Config> {
     @Override
     public GatewayFilter apply(Config config) {
-        return new OrderedGatewayFilter(new GatewayFilter() {
-            @Override
-            public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-                System.out.println(config.getA() +""+ config.getB() +""+ config.getC());
-                System.out.println("print any filter running");
-                return chain.filter(exchange);
-            }
-        },1);
+        return new OrderedGatewayFilter((exchange, chain) -> {
+            String path = exchange.getRequest().getPath().toString();
+            System.out.println("【局部过滤器】开始执行，请求路径：" + path);
+            System.out.println("【局部过滤器】配置参数：" + config.getA() + config.getB() + config.getC());
+            System.out.println("【局部过滤器】print any filter running");
+
+            return chain.filter(exchange).doOnSuccess(aVoid -> {
+                System.out.println("【局部过滤器】请求转发完成，路径：" + path);
+            });
+        }, 1);
     }
 
-    //定义自己filter的参数
     @Data
     public static class Config{
         private String a;
@@ -34,12 +35,10 @@ public class PrintAnyGatewayFilterFactory extends AbstractGatewayFilterFactory<P
         private String c;
     }
 
-    //把内部参数类写到构造方法
     public PrintAnyGatewayFilterFactory() {
         super(Config.class);
     }
 
-    //新增变量顺序
     @Override
     public List<String> shortcutFieldOrder() {
         return List.of("a","b","c");
