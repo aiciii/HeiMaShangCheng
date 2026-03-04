@@ -10,6 +10,14 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: ${hm.db.pw}
+    hikari:
+      maximum-pool-size: 10 # 修改：最大连接数从默认10→限制为10（2G虚拟机足够）
+      minimum-idle: 2 # 新增：最小空闲连接（避免创建过多空闲连接）
+      max-lifetime: 60000 # 新增：连接最大存活1分钟（提前回收，避免MySQL关闭）
+      idle-timeout: 30000 # 新增：空闲30秒回收（减少空闲连接占用）
+      connection-timeout: 5000 # 新增：获取连接超时5秒（避免阻塞）
+      connection-test-query: SELECT 1 # 新增：每次拿连接验证有效性
+      leak-detection-threshold: 0 # 新增：关闭泄露检测（减少开销）
   cloud:
     nacos:
       server-addr: 47.112.160.154:8848
