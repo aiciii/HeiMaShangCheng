@@ -1,56 +1,11 @@
 server:
   port: 8082
-spring:
-  application:
-    name: cart-service #微服务名称
-  profiles:
-    active: dev
-  datasource:
-    url: jdbc:mysql://${hm.db.host}:3306/hm-cart?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: ${hm.db.pw}
-    hikari:
-      maximum-pool-size: 10 # 修改：最大连接数从默认10→限制为10（2G虚拟机足够）
-      minimum-idle: 2 # 新增：最小空闲连接（避免创建过多空闲连接）
-      max-lifetime: 60000 # 新增：连接最大存活1分钟（提前回收，避免MySQL关闭）
-      idle-timeout: 30000 # 新增：空闲30秒回收（减少空闲连接占用）
-      connection-timeout: 5000 # 新增：获取连接超时5秒（避免阻塞）
-      connection-test-query: SELECT 1 # 新增：每次拿连接验证有效性
-      leak-detection-threshold: 0 # 新增：关闭泄露检测（减少开销）
-  cloud:
-    nacos:
-      server-addr: 47.112.160.154:8848
-mybatis-plus:
-  configuration:
-    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
-  global-config:
-    db-config:
-      update-strategy: not_null
-      id-type: auto
-logging:
-  level:
-    com.hmall: debug
-  pattern:
-    dateformat: HH:mm:ss:SSS
-  file:
-    path: "logs/${spring.application.name}"
-knife4j:
-  enable: true
-  openapi:
-    title: 黑马商城购物车接口文档
-    description: "黑马商城购物车接口文档"
-    email: zhanghuyi@itcast.cn
-    concat: 虎哥
-    url: https://www.itcast.cn
-    version: v1.0.0
-    group:
-      default:
-        group-name: default
-        api-rule: package
-        api-rule-resources:
-          - com.hmall.cart.controller
 feign:
   okhttp:
     enabled: true
-# keytool -genkeypair -alias hmall -keyalg RSA -keypass hmall123 -keystore hmall.jks -storepass hmall123
+hm:
+  db:
+    database: hm-cart
+  swagger:
+    title: "黑马商城购物车服务接口文档"
+    package: com.hmall.cart.controller
