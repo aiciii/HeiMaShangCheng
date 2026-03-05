@@ -6,11 +6,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import java.math.BigInteger;
 
 @Configuration
-@ConditionalOnClass(ObjectMapper.class)
+@ConditionalOnClass({ObjectMapper.class,DispatcherServlet.class})
 public class JsonConfig {
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
